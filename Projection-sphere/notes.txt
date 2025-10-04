@@ -1,0 +1,19 @@
+# Représentation de la sphère avec les segments longitude(Theta) / latitude(Phi)
+Densité du maillage de la sphère :
+Le "pas" détermine la densité :
+- Petit pas : plus de segments => la sphère est plus lisse
+- Grand pas : moins de segments => la sphère est plus grossière
+
+Les angles sont en radians (1 radians ~= 57,3°)
+Pour convertir un angle en degrés en radians : angle_rad = angle_deg * pi/180
+
+Exemples concrets :
+Très fin	    5°	M_PI/36
+Fin	            10°	M_PI/18
+Moyen	        15°	M_PI/12
+Grossier	    30°	M_PI/6
+Très grossier	45°	M_PI/4
+
+
+# Méthode de l'icosphère :
+TO DO
