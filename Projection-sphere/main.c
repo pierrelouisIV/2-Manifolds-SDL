@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#define LARGEUR 600
+#define LARGEUR 800
 #define HAUTEUR 800
 #define M_PI 3.14159265358979323846
 
@@ -66,7 +66,7 @@ void draw_sphere_rotated(SDL_Renderer *renderer) {
             float xr1Z = xr1Y * cos(_gamma) - yr1Y * sin(_gamma);
             float yr1Z = xr1Y * sin(_gamma) + yr1Y * cos(_gamma);
             float zr1Z = zr1Y;
-            // recentrer
+            // Recentrer
             xr1Z += sc[0];
             yr1Z += sc[1];
             zr1Z += sc[2];
@@ -92,7 +92,7 @@ void draw_sphere_rotated(SDL_Renderer *renderer) {
             float xr2Z = xr2Y * cos(_gamma) - yr2Y * sin(_gamma);
             float yr2Z = xr2Y * sin(_gamma) + yr2Y * cos(_gamma);
             float zr2Z = zr2Y;
-            // Recenter
+            // Recentrer
             xr2Z += sc[0];
             yr2Z += sc[1];
             zr2Z += sc[2];
@@ -193,6 +193,10 @@ int main(int argc, char **argv)
                         break;
 
                 }
+            }
+            if (e.type == SDL_MOUSEBUTTONDOWN) {
+                // Le clic devra modifier la caméra : zoomer un peu et se positioner sur la surface
+                d += 100.0;
             }
         }
         
