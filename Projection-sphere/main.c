@@ -186,10 +186,10 @@ int main(int argc, char **argv)
                         speedX -= 0.01f;
                         break;
                     case SDLK_m:
-                        _gamma += 0.01f;
+                        speedZ += 0.01f;
                         break;
                     case SDLK_l:
-                        _gamma -= 0.01f;
+                        speedZ -= 0.01f;
                         break;
 
                 }
