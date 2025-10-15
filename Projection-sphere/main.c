@@ -41,9 +41,16 @@ int main(int argc, char **argv)
     int quit = 0;
     SDL_Event e;
     
-    // Normaliser les sommets de l'icosaèdre
-    init_icosahedron();
-
+    // petits pas longtitude et latitude pour la sphère en maille classique (4, 6, 12, 18, 36)
+    float pas_longitude = M_PI / 4.0f;  //   environ 45°
+    float pas_latitude = M_PI / 4.0f;   //   environ 45°
+    
+    // Création de l’icosaèdre
+    Vect3 *vertices;
+    Face *faces;
+    int vertex_count, face_count;
+    create_icosahedron(&vertices, &vertex_count, &faces, &face_count); // icosahèdre de niveau 0
+    
     // Main loop
     while (!quit) {
         // Event handling
@@ -72,6 +79,28 @@ int main(int argc, char **argv)
                     case SDLK_l:
                         speedZ -= 0.01f;
                         break;
+                    case SDLK_d:    // pour l'icosphère
+                        if (face_count > 1 && face_count <  5120)
+                            subdivide(&vertices, &vertex_count, &faces, &face_count);
+                        
+                        break;
+                    // Affiner le maillage de la sphère :
+                    case SDLK_c:
+                        pas_longitude = M_PI / 6.0f;
+                        pas_latitude  = M_PI / 6.0f;
+                        break;
+                    case SDLK_v:
+                        pas_longitude = M_PI / 12.0f;
+                        pas_latitude  = M_PI / 12.0f;
+                        break;
+                    case SDLK_b:
+                        pas_longitude = M_PI / 18.0f;
+                        pas_latitude  = M_PI / 18.0f;
+                        break;
+                    case SDLK_n:
+                        pas_longitude = M_PI / 36.0f;
+                        pas_latitude  = M_PI / 36.0f;
+                        break;
 
                 }
             }
@@ -91,8 +120,8 @@ int main(int argc, char **argv)
   
         // Update the sphere
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        draw_sphere_rotated(renderer, alpha, beta, _gamma, d);
-        //draw_icosahedron(renderer, 100, d, alpha);
+        //draw_sphere_rotated(renderer, pas_longitude, pas_latitude, alpha, beta, _gamma, d);
+        draw_icosahedron(renderer, vertices, vertex_count, faces, face_count, alpha, beta, _gamma, d);
 
         // Update screen
         SDL_RenderPresent(renderer);

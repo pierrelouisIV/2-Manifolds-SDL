@@ -5,8 +5,6 @@
 // Vars globales
 float sc[3] = {0.0f, 0.0f, 400.0f};  // centre de la sphere
 int S_r =  150.0f;    // rayon de la sphere
-float pas_long = M_PI / 18.0f; // ~10°
-float pas_lat = M_PI / 18.0f; // ~10°
 
 
 // Generate the sphere points
@@ -17,7 +15,7 @@ void sphere(float theta, float phi, float *x, float *y, float *z) {
 }
 
 //
-void draw_sphere_rotated(SDL_Renderer *renderer, float alpha, float beta, float _gamma, float d) {      
+void draw_sphere_rotated(SDL_Renderer *renderer, float pas_long, float pas_lat, float alpha, float beta, float _gamma, float d) {      
     // Render the sphere
     float theta, phi;
     float x1, y1, z1, x2, y2, z2;
