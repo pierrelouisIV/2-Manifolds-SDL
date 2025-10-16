@@ -1,6 +1,4 @@
-
 #include "sphere.h"
-#include "icosahedron.h"
 
 // Vars globales
 float sc[3] = {0.0f, 0.0f, 400.0f};  // centre de la sphere

@@ -1,7 +1,7 @@
 #ifndef H_SPHERE
 #define H_SPHERE
 
-#include <SDL2/SDL.h>
+#include "manifold.h"
 #include "constant.h"
 
 //

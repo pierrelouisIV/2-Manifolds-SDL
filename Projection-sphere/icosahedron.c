@@ -1,16 +1,6 @@
-
 #include "icosahedron.h"
-#include "constant.h"
 
 // Utils :
-// fonction de projection
-void project_point(float x, float y, float z, int *X, int *Y, float d) {
-    float xp = (x * d) / z;
-    float yp = (y * d) / z;
-    // screen conversion
-    *X = LARGEUR / 2 + (int)xp;
-    *Y = HAUTEUR / 2 - (int)yp;
-}
 void normalize(float *x, float *y, float *z) {
     // Calcul des milieux puis normalisation
     float len = sqrt((*x) * (*x) + (*y) * (*y) + (*z) * (*z));
@@ -35,7 +25,7 @@ int edges[30][2] = {
 
 
 //
-void create_icosahedron(Vect3 **vertices, int *vertex_count, Face **faces, int *face_count) {
+void create_icosahedron(Vecteur3 **vertices, int *vertex_count, Face **faces, int *face_count) {
     // init des sommets :
     float verts[12][3] = { 
         {-1,  PHI, 0},
@@ -64,7 +54,7 @@ void create_icosahedron(Vect3 **vertices, int *vertex_count, Face **faces, int *
     };
 
     // Allocation dynamique
-    *vertices = malloc(sizeof(Vect3) * 12);
+    *vertices = malloc(sizeof(Vecteur3) * 12);
     memcpy(*vertices, verts, sizeof(verts));
     *vertex_count = 12;
 
@@ -78,13 +68,13 @@ void create_icosahedron(Vect3 **vertices, int *vertex_count, Face **faces, int *
 }
 
 // Dessine l'icosaèdre
-void draw_icosahedron(SDL_Renderer *renderer, Vect3 *vertices, int vertex_count, Face *faces, int face_count, float alpha, float beta, float gamma, float d) {
+void draw_icosahedron(SDL_Renderer *renderer, Vecteur3 *vertices, int vertex_count, Face *faces, int face_count, float alpha, float beta, float gamma, float d) {
     //
     for (int i = 0; i < face_count; i++) {
         Face f = faces[i];
 
         // --- Sommets du triangle ---
-        Vect3 v[3] = {
+        Vecteur3 v[3] = {
             vertices[(int)f.a],
             vertices[(int)f.b],
             vertices[(int)f.c]
@@ -135,26 +125,26 @@ void draw_icosahedron(SDL_Renderer *renderer, Vect3 *vertices, int vertex_count,
 
 
 // Division des triangles, donc de chaque face en quatre triangles
-void subdivide(Vect3 **vertices, int *vertex_count, Face **faces, int *face_count) {
+void subdivide(Vecteur3 **vertices, int *vertex_count, Face **faces, int *face_count) {
     int old_face_count = *face_count;
     Face *old_faces = *faces;
 
     // Allocation de mémoire  pour les nouveaux sommets + faces
     Face *new_faces = malloc(old_face_count * 4 * sizeof(Face));
-    Vect3 *new_vertices = malloc((*vertex_count + old_face_count * 3) * sizeof(Vect3));
-    memcpy(new_vertices, *vertices, *vertex_count * sizeof(Vect3));
+    Vecteur3 *new_vertices = malloc((*vertex_count + old_face_count * 3) * sizeof(Vecteur3));
+    memcpy(new_vertices, *vertices, *vertex_count * sizeof(Vecteur3));
     int new_vertex_count = *vertex_count;
     int new_face_count = 0;
 
     for (int i = 0; i < old_face_count; i++) {
-        Vect3 a = new_vertices[(int)old_faces[i].a];
-        Vect3 b = new_vertices[(int)old_faces[i].b];
-        Vect3 c = new_vertices[(int)old_faces[i].c];
+        Vecteur3 a = new_vertices[(int)old_faces[i].a];
+        Vecteur3 b = new_vertices[(int)old_faces[i].b];
+        Vecteur3 c = new_vertices[(int)old_faces[i].c];
 
         // Calcul des milieux de chaque segments
-        Vect3 ab = { (a.x+b.x)/2, (a.y+b.y)/2, (a.z+b.z)/2 };
-        Vect3 bc = { (b.x+c.x)/2, (b.y+c.y)/2, (b.z+c.z)/2 };
-        Vect3 ca = { (c.x+a.x)/2, (c.y+a.y)/2, (c.z+a.z)/2 };
+        Vecteur3 ab = { (a.x+b.x)/2, (a.y+b.y)/2, (a.z+b.z)/2 };
+        Vecteur3 bc = { (b.x+c.x)/2, (b.y+c.y)/2, (b.z+c.z)/2 };
+        Vecteur3 ca = { (c.x+a.x)/2, (c.y+a.y)/2, (c.z+a.z)/2 };
 
         // normalisation pour la sphère
         normalize(&ab.x, &ab.y, &ab.z);
@@ -186,11 +176,11 @@ void subdivide(Vect3 **vertices, int *vertex_count, Face **faces, int *face_coun
 }
 
 // Fonction pour dessiner l'icosphère
-void draw_icosphere(SDL_Renderer *r, Vect3 *v, Face *f, int face_count, float scale, float d, float alpha) {
+void draw_icosphere(SDL_Renderer *r, Vecteur3 *v, Face *f, int face_count, float scale, float d, float alpha) {
     for (int i = 0; i < face_count; i++) {
-        Vect3 p[3];
+        Vecteur3 p[3];
         for (int j = 0; j < 3; j++) {
-            Vect3 P = v[(int) (&f[i].a)[j] ]; // récupère le bon sommet
+            Vecteur3 P = v[(int) (&f[i].a)[j] ]; // récupère le bon sommet
             // rotation Y
             float xr = P.x * cosf(alpha) + P.z * sinf(alpha);
             float yr = P.y;
@@ -201,9 +191,9 @@ void draw_icosphere(SDL_Renderer *r, Vect3 *v, Face *f, int face_count, float sc
 
         // Projection (pour la perspective)
         int X1, Y1, X2, Y2, X3, Y3;
-        p[0].z += 400.0f;
-        p[1].z += 400.0f;
-        p[2].z += 400.0f;
+        //p[0].z += 400.0f;
+        //p[1].z += 400.0f;
+        //p[2].z += 400.0f;
         project_point(p[0].x, p[0].y, p[0].z, &X1, &Y1, d);
         project_point(p[1].x, p[1].y, p[1].z, &X2, &Y2, d);
         project_point(p[2].x, p[2].y, p[2].z, &X3, &Y3, d);

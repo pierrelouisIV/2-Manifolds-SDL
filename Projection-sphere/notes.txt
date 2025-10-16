@@ -16,4 +16,9 @@ Très grossier	45°	M_PI/4
 
 
 # Méthode de l'icosphère :
-TO DO
+On part d'un icosaèdre et on divise chaque face en quatre triangles.
+On répète ce processus 3-4 fois pour s'approcher d'une sphère (l'icosphère)
+
+
+# AJout de rayon lumineux parcourant la surface de la sphère :
+FAIT mais il faudrait que le trajet suive la sphère quand on la tourne.

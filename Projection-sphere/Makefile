@@ -11,7 +11,7 @@ LM_CFLAGS = -lm
 
 # Executable and sources
 TARGET = prog
-SRCS = main.c icosahedron.c sphere.c
+SRCS = main.c icosahedron.c sphere.c manifold.c
 OBJS = $(SRCS:.c=.o)
 
 # Build the target

@@ -10,6 +10,8 @@ float speedZ = 0.0f;
 float alpha = 0.0f; // angle de rotation de laxe Y
 float beta = 0.0f;  // angle de rotation de l'axe X
 float _gamma = 0.0f; // angle de rotation de l'axe Z
+float R = 150.0f;   // Rayon de la sphere
+
 
 /* main function  */
 int main(int argc, char **argv)
@@ -46,11 +48,16 @@ int main(int argc, char **argv)
     float pas_latitude = M_PI / 4.0f;   //   environ 45°
     
     // Création de l’icosaèdre
-    Vect3 *vertices;
+    Vecteur3 *vertices;
     Face *faces;
     int vertex_count, face_count;
     create_icosahedron(&vertices, &vertex_count, &faces, &face_count); // icosahèdre de niveau 0
-    
+    // Initialisation du rayon
+    Vecteur3 pos = {R, 0, 0};
+    Vecteur3 axis = {0, 1, 0};
+    Vecteur3 dir = cross(axis, pos);
+    gd_normalize(&dir);
+
     // Main loop
     while (!quit) {
         // Event handling
@@ -107,7 +114,7 @@ int main(int argc, char **argv)
         }
         
         // Clear screen
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black screen
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
         // Angle update
@@ -120,8 +127,14 @@ int main(int argc, char **argv)
   
         // Update the sphere
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        //draw_sphere_rotated(renderer, pas_longitude, pas_latitude, alpha, beta, _gamma, d);
-        draw_icosahedron(renderer, vertices, vertex_count, faces, face_count, alpha, beta, _gamma, d);
+        draw_sphere_rotated(renderer, pas_longitude, pas_latitude, alpha, beta, _gamma, d);
+        //draw_icosahedron(renderer, vertices, vertex_count, faces, face_count, alpha, beta, _gamma, d);
+        
+        //
+        update_ray(&pos, &dir, R, 5.0f);   // 0.02f ??
+        draw_point(renderer, pos, d);
+        debug_draw_vector(renderer, pos, dir, d, 30.0f);
+        //printf("pos: (%f, %f, %f)\n", pos.x, pos.y, pos.z);
 
         // Update screen
         SDL_RenderPresent(renderer);
