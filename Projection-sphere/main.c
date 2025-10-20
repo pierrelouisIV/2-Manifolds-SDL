@@ -43,15 +43,16 @@ int main(int argc, char **argv)
     int quit = 0;
     SDL_Event e;
     
-    // petits pas longtitude et latitude pour la sphère en maille classique (4, 6, 12, 18, 36)
-    float pas_longitude = M_PI / 4.0f;  //   environ 45°
-    float pas_latitude = M_PI / 4.0f;   //   environ 45°
+    // Pour la sphere : petits pas longtitude et latitude pour la sphère en maille classique (4, 6, 12, 18, 36)
+    float pas_longitude = M_PI / 18.0f;  //   environ 45°
+    float pas_latitude = M_PI / 18.0f;   //   environ 45°
     
     // Création de l’icosaèdre
     Vecteur3 *vertices;
     Face *faces;
     int vertex_count, face_count;
     create_icosahedron(&vertices, &vertex_count, &faces, &face_count); // icosahèdre de niveau 0
+    
     // Initialisation du rayon
     Vecteur3 pos = {R, 0, 0};
     Vecteur3 axis = {0, 1, 0};
@@ -92,6 +93,10 @@ int main(int argc, char **argv)
                         
                         break;
                     // Affiner le maillage de la sphère :
+                    case SDLK_x:
+                        pas_longitude = M_PI / 4.0f;
+                        pas_latitude  = M_PI / 4.0f;
+                        break;
                     case SDLK_c:
                         pas_longitude = M_PI / 6.0f;
                         pas_latitude  = M_PI / 6.0f;
@@ -107,7 +112,6 @@ int main(int argc, char **argv)
                     case SDLK_n:
                         pas_longitude = M_PI / 36.0f;
                         pas_latitude  = M_PI / 36.0f;
-                        break;
 
                 }
             }
@@ -131,7 +135,7 @@ int main(int argc, char **argv)
         //draw_icosahedron(renderer, vertices, vertex_count, faces, face_count, alpha, beta, _gamma, d);
         
         //
-        update_ray(&pos, &dir, R, 5.0f);   // 0.02f ??
+        update_ray(&pos, &dir, R, 4.0f);   // 0.02f ??
         draw_point(renderer, pos, d);
         debug_draw_vector(renderer, pos, dir, d, 30.0f);
         //printf("pos: (%f, %f, %f)\n", pos.x, pos.y, pos.z);

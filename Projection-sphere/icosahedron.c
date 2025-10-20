@@ -102,7 +102,7 @@ void draw_icosahedron(SDL_Renderer *renderer, Vecteur3 *vertices, int vertex_cou
             x = x2; y = y2;
 
             // Translation pour éviter la caméra au centre
-            z += 3.0f;
+            z += 1.5f;
 
             v[j].x = x;
             v[j].y = y;

@@ -117,11 +117,17 @@ Vecteur3 tangent_direction(Vecteur3 point, Vecteur3 axis) {
 
 // SDL functions
 void draw_point(SDL_Renderer *renderer, Vecteur3 position, float d) {
-    if (position.z <= 0.1f) return; //point derrière la caméra
+    //if (position.z <= 0.1f) return; //point derrière la caméra
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     int X, Y;
     project_point_ray(position.x, position.y, position.z, &X, &Y, d);
-    SDL_RenderDrawPoint(renderer, X, Y);
+    SDL_Rect rect;
+    rect.x = X;
+    rect.y = Y;
+    rect.h = 10;
+    rect.w = 10;
+    SDL_RenderDrawRect(renderer, &rect);
+    //SDL_RenderDrawPoint(renderer, X, Y);
 }
 // 
 void debug_draw_vector(SDL_Renderer *renderer, Vecteur3 pos, Vecteur3 dir, float d, float s) {
