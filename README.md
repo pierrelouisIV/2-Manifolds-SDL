@@ -1,4 +1,4 @@
-# 2-manifold projection with SDL
+# 2-manifolds projection with SDL
 
 ## Installation :
 - Copy the repository
@@ -8,9 +8,13 @@
 make
 ```
 
-## $S^2$
+## Typical example of 2-manifolds :
+### Sphere or $S^2$
 1. Classical projection with longitude & latitude
 2. Icosahedron to Icosphere
+
+### Torus or $T^2$
+1. TO DO
 
 ## Curve on 2-manifold
 1. Trajectory on $S^2$
